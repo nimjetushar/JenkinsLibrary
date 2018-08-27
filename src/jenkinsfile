@@ -1,0 +1,26 @@
+@Library('JenkinsLibrary@master')
+import org.setup.SetupUtility
+import org.build.BuildUtility
+import org.deploy.DeployUtility 
+
+node('cm-linux') {
+    def setupUtil = new SetupUtility(this)
+    def buildUtil = new BuildUtility(this)
+    def deployUtils = new DeployUtility(this)
+    
+    stage('init') {
+        setupUtil.init env, params
+        checkout scm
+    }
+
+    // In same way create different stages and call the libraby functions any where
+
+    // use bellow syntex if want user input while building.
+    // properties([
+    //     parameters([
+    //         string(name: 'name_of_parameter', defaultValue: '', description: ''),
+    //         choice(name: 'name_of_parameter', defaultValue: '', choices: 'sample1\nsample2\nsample3', description: '')
+    //         booleanParam(name: 'name_of_parameter', defaultValue: '', description: '')
+    //     ])
+    // ])
+}
